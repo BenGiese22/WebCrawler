@@ -3,6 +3,7 @@
  */
 package WebCrawler;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.swing.*;
+
 /**
  * TODO Add Class Javadocs
  *
@@ -29,6 +32,7 @@ public class SpiderController implements Initializable {
     Crawler crawler = new Crawler("https://en.m.wikipedia.org/wiki/North_Fond_du_Lac,_Wisconsin");
 
     private static final String ACCESSEDWEBSITESLIST_FXML = "AccessedWebsitesList.fxml";
+    private static final String DISPLAYPAGE_FXML = "DisplayPage.fxml";
 
     ObservableList<String> websitesEntered = FXCollections.observableArrayList();
 
@@ -40,7 +44,7 @@ public class SpiderController implements Initializable {
     public Menu helpMenu;
     public MenuItem aboutMenuItem;
     public Button accessedWebsites;
-
+    public Button displayInfoButton;
 
     /**
      * Initializes the controller class.
@@ -79,6 +83,22 @@ public class SpiderController implements Initializable {
 
     public void aboutMenuItem(ActionEvent event) {
         //version control?
+    }
+
+    public void displayInfoButton(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(DISPLAYPAGE_FXML));
+            Parent root2 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Website SourceCode");
+            stage.setScene(new Scene(root2));
+            stage.show();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error loading Display Page Application",
+                    "Error", JOptionPane.ERROR_MESSAGE);;
+        }
     }
 
 
